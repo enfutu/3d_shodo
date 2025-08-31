@@ -1,4 +1,4 @@
-Shader "enfutu/sortWpos"
+Shader "enfutu/generateWposMap"
 {
     Properties
     {
@@ -6,7 +6,7 @@ Shader "enfutu/sortWpos"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue" = "Geometry-1999" }
+        Tags { "RenderType"="Opaque" "Queue" = "Geometry" }
         LOD 100
 
         Pass

@@ -6,7 +6,7 @@ using VRC.Udon;
 
 namespace enfutu.UdonScript
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    //[UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class mapCreater : UdonSharpBehaviour
     {
         [SerializeField] MeshRenderer mesh;
