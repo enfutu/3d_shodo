@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 335815205}
   - component: {fileID: 335815207}
   - component: {fileID: 335815206}
-  m_Layer: 22
+  m_Layer: 25
   m_Name: mapCreater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 370199540}
-  m_Layer: 22
+  m_Layer: 25
   m_Name: Washi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1366,7 +1366,6 @@ GameObject:
   - component: {fileID: 775902565}
   - component: {fileID: 775902568}
   - component: {fileID: 775902567}
-  - component: {fileID: 775902566}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -1389,28 +1388,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 184321837}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &775902566
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775902564}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &775902567
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3010,13 +2987,13 @@ GameObject:
   - component: {fileID: 1081379150}
   - component: {fileID: 1081379152}
   - component: {fileID: 1081379151}
-  m_Layer: 22
+  m_Layer: 25
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1081379150
 Transform:
   m_ObjectHideFlags: 0
@@ -3094,7 +3071,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_UseCustomVertexStreams: 1
-  m_VertexStreams: 00010304
+  m_VertexStreams: 00010304200a2e
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 0}
@@ -3677,7 +3654,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 1000
+    maxNumParticles: 10000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -3737,7 +3714,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 13
+    type: 5
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -3745,7 +3722,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Scale: {x: 100, y: 100, z: 100}
     placementMode: 2
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -3811,7 +3788,7 @@ ParticleSystem:
     m_Sprite: {fileID: 0}
     m_SpriteRenderer: {fileID: 0}
     m_UseMeshMaterialIndex: 0
-    m_UseMeshColors: 1
+    m_UseMeshColors: 0
     alignToDirection: 0
     m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
@@ -3943,7 +3920,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 1000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -8063,7 +8040,6 @@ GameObject:
   - component: {fileID: 1255560494}
   - component: {fileID: 1255560497}
   - component: {fileID: 1255560496}
-  - component: {fileID: 1255560495}
   m_Layer: 0
   m_Name: Quad (2)
   m_TagString: Untagged
@@ -8086,28 +8062,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 184321837}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1255560495
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255560493}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1255560496
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11544,7 +11498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1819661972}
   - component: {fileID: 1819661973}
-  m_Layer: 22
+  m_Layer: 25
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11576,7 +11530,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -11605,7 +11559,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4194304
+    m_Bits: 37748736
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 1c83e345e7a2a644eae2558570c82d7e, type: 2}
   m_TargetDisplay: 0
@@ -11641,7 +11595,7 @@ GameObject:
   - component: {fileID: 1880054025}
   - component: {fileID: 1880054024}
   - component: {fileID: 1880054023}
-  m_Layer: 22
+  m_Layer: 25
   m_Name: QuadGridMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11657,7 +11611,7 @@ Transform:
   m_GameObject: {fileID: 1880054021}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.779, z: 0}
+  m_LocalPosition: {x: -3.57, y: 2.25, z: 0.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11684,7 +11638,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 806774d85e2fbc543bf4f2eaadcb6403, type: 2}
+  m_Mesh: {fileID: 4300000, guid: e57b91a5059fd9f46bd179e635c30fe3, type: 2}
 --- !u!23 &1880054024
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11705,7 +11659,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: be44a100051dcf34db18228faf983c71, type: 2}
+  - {fileID: 2100000, guid: 85de4882d59df644da58b23a63ace72d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11734,7 +11688,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880054021}
-  m_Mesh: {fileID: 4300000, guid: 806774d85e2fbc543bf4f2eaadcb6403, type: 2}
+  m_Mesh: {fileID: 4300000, guid: e57b91a5059fd9f46bd179e635c30fe3, type: 2}
 --- !u!1 &1901771193 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3102876751704921109, guid: 2674f268860583949b53b63df24489ea,
@@ -12052,7 +12006,6 @@ GameObject:
   - component: {fileID: 2046747686}
   - component: {fileID: 2046747689}
   - component: {fileID: 2046747688}
-  - component: {fileID: 2046747687}
   m_Layer: 0
   m_Name: Quad (1)
   m_TagString: Untagged
@@ -12075,28 +12028,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 184321837}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2046747687
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046747685}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2046747688
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12314,7 +12245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchedFromSDKPipeline: 0
   completedSDKPipeline: 0
-  blueprintId: 
+  blueprintId: wrld_96e14d66-adbd-4951-9e5a-563b2904731f
   contentType: 1
   assetBundleUnityVersion: 
   fallbackStatus: 0
@@ -12342,14 +12273,14 @@ MonoBehaviour:
   interactThruLayers: 0
   autoSpatializeAudioSources: 0
   gravity: {x: 0, y: -9.81, z: 0}
-  layerCollisionArr: 01010101010001010101010100010001010101010101010101010101010101010101010101000101010101010001000101010101010101010101010101010101010101010100010101010101000100010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101000101010101010001000101010101010101010101010101010101000000010000010100000000000000000000000000000101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010100010101010101000100010101010101010101010101010101010101010101010001010100000100000000000001010101010101010101010101010101010101000101010000010000000000000101010101010101010101010101010101010100010101010101000100010101010101010101010101010101010100000001000001010000000000000000000000000000010101010101010101010101010101000101010000010001010101010000000001010101010101010101000000010000010100000000000100000000000000000101010101010101010101010101010001010100000100010001010101010101010101010101010101010101010101000101010000010001000101010101010101010101010101010101010101010100010101000001000100010101010101010101010101010101010101010101010001010101010100000001010101010101010101010101010101010101010101000101010101010000000101010101010101010101010101010101010101010100010101010101000000010101010101010101010101010101010101010101010001010101010100000001010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
+  layerCollisionArr: 01010100010001010101010100010001010101000101000101000101010101010101010001000101010101010001000101010100010100010100010101010101010101000100010101010101000100010101010001010001010001010101010100000001000000000000000000000000000000000000000101000101010101010101010001000101010101010001000101010100010100010100010101010101000000000000010100000000000000000000000000000001010001010101010101010100010101010101010101010101010101010101000101000101010101010101010001010101010101010101010101010101010100010100010101010101010101000100010101010101000100010101010001010001010001010101010101010100010001010100000100000000000001000101000101000101010101010101010001000101010000010000000000000100010100010100010101010101010101000100010101010101000100010101010001010001010001010101010100000000000001010000000000000000000000000000000101000101010101010101010001000101010000010001010101010000000000010100010101010101000000000000010100000000000100000000000000000001010001010101010101010100010001010100000100010001010101000101000101000101010101010101010001000101010000010001000101010100010100010100010101010101010101000100010101000001000100010101010001010001010001010101010101010100010001010101010100000001010101000101000101000101010101010000000000000101000000000000000000000000000000010100010101010101010101000100010101010101000000010101010001010001010001010101010101010100010001010101010100000001010101000101000101000101010101010000000000000000000000000000000000000000000001010101010101010101010101010101010101010101010101010101010101010101010001010101010101010101010101010101010101010101010101010101010101010101010101010000000000000000000000000000000000000000000001000101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
   capacity: 0
   contentSex: 0
   contentViolence: 0
   contentGore: 0
   contentOther: 0
   releasePublic: 0
-  unityVersion: 2019.4.31f1
+  unityVersion: 2022.3.22f1
   udonProducts: []
   Name: 
   NSFW: 0
@@ -12359,9 +12290,35 @@ MonoBehaviour:
   useAssignedLayers: 0
   DynamicPrefabs: []
   DynamicMaterials:
-  - {fileID: 2100000, guid: a23a1ccd2615c194c83209c518f65713, type: 2}
-  - {fileID: 2100000, guid: 0136de496ea5b7b4b9a581943772a83f, type: 2}
-  - {fileID: 2100000, guid: f512933c29368f44bb7d4f0c873c4a14, type: 2}
+  - {fileID: 2100000, guid: f6d16de45dddb2b468f57adc22f27859, type: 2}
+  - {fileID: 2100000, guid: 7659df2a5c683224194cee263ed85e6e, type: 2}
+  - {fileID: 2100000, guid: a509c6bccb441ba4b8b06e6901ee3bdf, type: 2}
+  - {fileID: 2100000, guid: e81e61c053146804a88566fd5af86afa, type: 2}
+  - {fileID: 2100000, guid: e86e7281176dae945bd655f34805ed55, type: 2}
+  - {fileID: 2100000, guid: 3f13a5d1eb038764b804d1aabffed55f, type: 2}
+  - {fileID: 2100000, guid: 419ae9fed5372564c995339c60fd7ebf, type: 2}
+  - {fileID: 2100000, guid: 48f32ce8d7140f045a2c568df3a8d9bd, type: 2}
+  - {fileID: 2100000, guid: 5b91c5c74862dba4d9fc2e8ae3e07b70, type: 2}
+  - {fileID: 2100000, guid: c2af845bdfb561149b08ba13167ff040, type: 2}
+  - {fileID: 2100000, guid: 56778de2f4060f14fb06bc8cba7e30b7, type: 2}
+  - {fileID: 2100000, guid: e01134920adbcf549ac7f52ceeb583a2, type: 2}
+  - {fileID: 2100000, guid: 254a177cd9c57e84683d0fd3bd1be46d, type: 2}
+  - {fileID: 2100000, guid: 43d0ae848fdfe6d4495a87f8e80e386b, type: 2}
+  - {fileID: 2100000, guid: 885a01c79ffd5024489a1fb31f3fffb5, type: 2}
+  - {fileID: 2100000, guid: 87529c80faca0ef4a881efba652815f3, type: 2}
+  - {fileID: 2100000, guid: 9db9f48f3ee803d448488d4368a140f9, type: 2}
+  - {fileID: 2100000, guid: 88aa935393607b6409baa45499f5156b, type: 2}
+  - {fileID: 2100000, guid: a393dafb2990e2c4fa0628ace4444efa, type: 2}
+  - {fileID: 2100000, guid: dd75a5d3bd47a0c489c0fd71aff39ede, type: 2}
+  - {fileID: 2100000, guid: 49c7ed6d767622b4fadcf200017fd44f, type: 2}
+  - {fileID: 2100000, guid: b3889ddf2a4bd9346a4843eb47e0acb1, type: 2}
+  - {fileID: 2100000, guid: b24ed807dd7dc224baf5390f46738647, type: 2}
+  - {fileID: 2100000, guid: 51d72acecdb1ba249957953415f8e29b, type: 2}
+  - {fileID: 2100000, guid: c815f7613a04b724089c206857e57c6a, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 25904cb0b72bc6c4f88adfc9c6715f5f, type: 2}
+  - {fileID: 2100000, guid: 85de4882d59df644da58b23a63ace72d, type: 2}
+  - {fileID: 2100000, guid: c4c509a7538788a43a2b329fa9533fe0, type: 2}
   - {fileID: 2100000, guid: b5482cb7b3686864c81ced071f57bf03, type: 2}
   LightMapsNear: []
   LightMapsFar: []

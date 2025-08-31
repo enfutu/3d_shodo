@@ -71,7 +71,7 @@ Shader "enfutu/RTUpdate"
                 float2 st = i.uv;
 
                 float2 fst = floor(st * 4096) / 4096;
-                float3 map = tex2D(_WposMap, float2(1 - fst.x, fst.y));
+                float3 map = tex2D(_WposMap, fst);
 
                 fixed mark = saturate(tex2D(_Mark0, st).r + tex2D(_Mark1, st).r);
 

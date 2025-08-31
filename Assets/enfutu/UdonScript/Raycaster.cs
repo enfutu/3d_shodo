@@ -34,7 +34,7 @@ namespace enfutu.UdonScript
         }
 
         //raycast
-        int layerMask = 1 << 22;
+        int layerMask = 1 << 25;
         private float rayDistance = 1f;
         bool blink = false;
         private void raychan()

@@ -6,8 +6,9 @@ Shader "enfutu/generateWposMap"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue" = "Geometry" }
+        Tags { "RenderType"="Opaque" "Queue" = "Geometry-1999" }
         LOD 100
+        cull off
 
         Pass
         {
@@ -54,11 +55,8 @@ Shader "enfutu/generateWposMap"
                 o.wv = wv;
                 o.lv = v.vertex.xyz;
 
-
                 wv.z = 0;
-                wv.xy = v.uv;
-                
-                //wv.y -= 10;
+                wv.xy = float2(1 - v.uv.x, v.uv.y);
 
                 v.vertex = mul(unity_WorldToObject, float4(wv, 1));
 

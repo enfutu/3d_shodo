@@ -59,7 +59,8 @@ Shader "enfutu/active"
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
                 fixed4 col = tex2D(_MainTex, i.uv);
-                int active = any(col) ? 1.0 : 0.0;
+                col.a = saturate(col.a - .9);       //”»’è‚Écol.a‚ğg—p‚·‚éBŸø‚İ•”•ª‚Í”ñactive‚Æ‚·‚é
+                int active = any(col.a) ? 1.0 : 0.0;
                 
                 return active;
             }

@@ -64,12 +64,12 @@ Shader "enfutu/fiber"
 
                 float2 st = i.uv;
 
-                fixed4 col = tex2D(_MainTex, st);
+                fixed4 col = 1;//tex2D(_MainTex, st);
                 
                 col = tex2D(_MainTex, i.uv) * _Color;
                 
                               
-                float offset = lerp(.005, .1, col.a);
+                float offset = .005;//lerp(.005, .1, col.a);
 
                 //Œ©‚½–Ú‚ğ®‚¦‚é‚â‚Â«
                 float a = (st.y * 4096) % 1;
