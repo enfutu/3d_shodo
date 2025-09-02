@@ -82,7 +82,7 @@ Shader "enfutu/RTUpdate"
                 fixed src1 = tex2D(_Src, floor((st + float2(offset, 0)) * 4096 ) / 4096).a * .98;
                 fixed src2 = tex2D(_Src, floor((st - float2(offset, 0)) * 4096 ) / 4096).a * .98;
 
-                fixed src = (src0 + src1 + src2) * .33333;
+                fixed src = (src0 + src1 + src2) * .333333;
 
                 fixed4 col = 0;
                 col.a = saturate(src + mark);
