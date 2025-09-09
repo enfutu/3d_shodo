@@ -1,14 +1,15 @@
-Shader "enfutu/MarkUpdate"
+Shader "enfutu/fude_fiber"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "black" {}
-        _Src ("Src", 2D) = "black" {}
+        _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
+
+        Cull Off
 
         Pass
         {
@@ -37,16 +38,10 @@ Shader "enfutu/MarkUpdate"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            sampler2D _MainTex, _Src;
+            sampler2D _MainTex;
             float4 _MainTex_ST;
-            
-            int _MaxLength;
-            float4 _Positions[100];
 
-            float rand(float2 st)
-            {
-                return frac(sin(dot(st, float2(12.9898, 78.233))) * 43758.5453);
-            }
+            float4 _Start, _Hit, _End;
 
             v2f vert (appdata v)
             {
@@ -57,6 +52,13 @@ Shader "enfutu/MarkUpdate"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+                int myNum = floor(v.uv.y * 10);     //0Å`10Ç‹Ç≈
+                float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz;
+
+                wv = lerp(wv, _End, myNum * .1);
+
+                v.vertex = mul(unity_WorldToObject, float4(wv, 1));
+                    
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
@@ -67,40 +69,10 @@ Shader "enfutu/MarkUpdate"
                 // single pass instanced rendering
                 UNITY_SETUP_INSTANCE_ID(i);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
-                
-                float2 st = i.uv;
 
-                float a = (st.y * 4096) % 1;
-                a = step(.3, a) * step(a, .7); 
-
-                fixed4 src = tex2D(_Src, st);
-
-                int2 fst = floor(st * 4096);
-                int2 fst_min = floor((st - 0.0024414062) * 4096);
-                int2 fst_max = floor((st + 0.0024414062) * 4096);
-                
-                int isTouch = 0;
-                for(int i = 0; i < _MaxLength; i++)
-                {
-                    int _x = 0;
-                    int _y = 0;
-
-                    float2 target = floor(_Positions[i].xy * 4096);
-                    if(fst_min.x < target.x && target.x < fst_max.x)
-                    { 
-                        _x = 1;
-                    } 
-
-                    if(fst.y == target.y)
-                    {  
-                        _y = 1;
-                    }
-
-                    isTouch += _x * _y * a;
-                }
-
-                fixed4 col = saturate(src + isTouch);
-
+                // sample the texture
+                fixed4 col = 0;//tex2D(_MainTex, i.uv);
+                col.r = i.uv.y;
                 return col;
             }
             ENDCG

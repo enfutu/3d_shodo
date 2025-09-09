@@ -28,8 +28,8 @@ public class QuadGridMeshGenerator : EditorWindow
     {
         int quadCount = 4096;
         float width = 4.096f;
-        float height = 0.1f;
-        float range = 1.0f; // [-1,1]立方体
+        float height = 0.01f;
+        float range = 2.0f;//1.0f; // [-1,1]立方体
 
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();

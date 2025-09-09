@@ -69,7 +69,7 @@ Shader "enfutu/fiber"
                 col = tex2D(_MainTex, i.uv) * _Color;
                 
                               
-                float offset = .005;//lerp(.005, .1, col.a);
+                float offset = lerp(.01, 1, col.a);
 
                 //Œ©‚½–Ú‚ğ®‚¦‚é‚â‚Â«
                 float a = (st.y * 4096) % 1;

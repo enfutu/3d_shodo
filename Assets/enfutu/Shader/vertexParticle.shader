@@ -11,6 +11,7 @@ Shader "enfutu/vertexParticle"
         LOD 100
 
         cull off
+        //ZTest Off
 
         Pass
         {
@@ -38,6 +39,7 @@ Shader "enfutu/vertexParticle"
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
                 float2 uv2 : TEXCOORD1;
+                float4 screenPos : TEXCOORD2;
 
                 // single pass instanced rendering
                 UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -74,6 +76,11 @@ Shader "enfutu/vertexParticle"
                 return normalize(q);
             }
 
+            float random(fixed2 st)
+            {
+	            return frac(sin(dot(st.xy, fixed2(12.9898, 78.233))) * 43758.5453);
+            }
+
             v2f vert (appdata v)
             {
                 v2f o;
@@ -86,6 +93,11 @@ Shader "enfutu/vertexParticle"
                 float4 map = tex2Dlod(_Map, float4(v.uv, 0, 0));
                 float3 center = map.xyz;
 
+                float noise_x = random(floor(center.yz * 100));
+                float noise_y = random(floor(center.xz * 100));
+                float noise_z = random(floor(center.xy * 100));
+                float3 noise = (float3(noise_x, noise_y, noise_z) - .5) * .2;
+
                 if(length(center) < .0001) { center = 10000; }
 
                 float3 nextcenter = tex2Dlod(_Map, float4(float2(v.uv.x + 0.00024414062, v.uv.y), 0, 0));
@@ -94,16 +106,19 @@ Shader "enfutu/vertexParticle"
                 float3 n0 = float3(0,1,0);
                 float4 q  = quatFromTo(n0, vec);
 
-                float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz * .2;
+                float size = saturate(1 - length(noise * 2));
+                size = pow(size, 2) * .1;
+                float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz * size;
                 wv = rotateByQuat(wv, q);
 
-                wv += center;
+                wv += center + noise;
 
                 v.vertex =  mul(unity_WorldToObject, float4(wv, 1));
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uv2 = TRANSFORM_TEX(v.uv2, _MainTex);
+                o.screenPos = ComputeScreenPos(o.vertex);
 
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
@@ -121,7 +136,9 @@ Shader "enfutu/vertexParticle"
                 fixed4 col = tex2D(_MainTex, st);
                 col = 0;
 
-                col.rg = st;
+                //col.rg = st;
+                col.rg = i.screenPos.xy / i.screenPos.w;
+
 
                 float dist = 1 - length(st - .5);
 
