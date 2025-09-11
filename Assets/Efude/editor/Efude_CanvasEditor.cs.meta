@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 92a8456f58b937b4994bf2544225bf60
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - Canvas: {instanceID: 0}
+  - prefab: {fileID: 6957100540439053202, guid: ade7fcf704e78344394328090d0a854c,
+      type: 3}
+  - CameraOb: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

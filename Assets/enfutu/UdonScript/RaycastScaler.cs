@@ -44,12 +44,12 @@ namespace enfutu.UdonScript
                 Vector3 offset = (Mathf.Cos(angle) * right + Mathf.Sin(angle) * planeUp) * Radius;
                 Vector3 pos = this.transform.position + offset;
 
-
                 _raycaster[i] = Instantiate(_source, pos, Quaternion.identity, this.transform);
 
                 var script = _raycaster[i].GetComponent<Raycaster>();
-                
-                script.StartBase.position = _startBase.position;
+
+                //script.StartBase.position = _startBase.position;
+                script.StartBase.position = pos;
                 script.EndBase.position = _endBase.position;
                 script.ID = i;
                 script.BlitSc = BlitSc;

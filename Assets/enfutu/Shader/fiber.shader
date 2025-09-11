@@ -66,17 +66,17 @@ Shader "enfutu/fiber"
 
                 fixed4 col = 1;//tex2D(_MainTex, st);
                 
-                col = tex2D(_MainTex, i.uv) * _Color;
+                col = length(tex2D(_MainTex, i.uv)) * _Color;
                 
                               
-                float offset = lerp(.01, 1, col.a);
+                //float offset = lerp(.01, 1, col.a);
+                float offset = lerp(.01, .01, col.a);
 
                 //Œ©‚½–Ú‚ğ®‚¦‚é‚â‚Â«
                 float a = (st.y * 4096) % 1;
                 a = step(.5 - offset, a) * step(a, .5 + offset); 
                 clip(a - .1);
                
-
                 return col;
             }
             ENDCG

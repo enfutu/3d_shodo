@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: fude
+  m_Shader: {fileID: 4800000, guid: 4414c70c03545ed4e906cd56d82aadb3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 091a2ae47caea5143a13b7f55f0bfbb0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Alpha: 1
+    - _Illustration: 0
+    - _Ref: 101
+    - _SetSize: 1
+    - _Stickiness: 0
+    - _Test: 100
+    - _curve: 0
+    - _hit: 0.065
+    - _pickCol: 0.9440001
+    - _pickColA: 0.81500024
+    - _pickColB: 0.9890002
+    - _size: 6.5
+    - _thirst: 0
+    m_Colors:
+    - _Alpha: {r: 0.9, g: 0.3, b: 0, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.99}
+    - _V0: {r: 0, g: 0.000011058062, b: 0.032024924, a: 0}
+    - _V1: {r: 0, g: -0.000009460836, b: 0.03202493, a: 0}
+    - _V2: {r: 4.109, g: 0.16101104, b: 0.03196933, a: 0}
+    - _V3: {r: 0, g: -0.000002546697, b: 0.03202493, a: 0}
+    - _V4: {r: 0, g: -0.0000015185169, b: 0.03202493, a: 0}
+    - _V5: {r: 0, g: 0.0000022812792, b: 0.032024927, a: 0}
+    - _V6: {r: 0, g: 0.0000050528943, b: 0.032024927, a: 0}
+    - _V7: {r: 0, g: 0.0000060810744, b: 0.032024927, a: 0}
+    - _myRote: {r: 89.97202, g: 0, b: 0, a: 0}
+    - _posA: {r: 0.0000016242266, g: -0.00000346452, b: 0.054945216, a: 0}
+    - _posB: {r: 0, g: 0, b: 0, a: 0}
+    - _posC: {r: 0, g: 0, b: 0.065, a: 0}

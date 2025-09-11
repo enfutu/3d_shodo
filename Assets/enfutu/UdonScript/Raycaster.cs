@@ -26,8 +26,9 @@ namespace enfutu.UdonScript
         public void Boot()
         {
             _start = StartBase.position;
+            _end = EndBase.position;
 
-            rayDistance = Vector3.Distance(EndBase.position, _start);
+            rayDistance = Vector3.Distance(_end, _start);
 
             Vector3 vec = (_end - _start).normalized;
             float halfRayDistance = rayDistance * .5f;
