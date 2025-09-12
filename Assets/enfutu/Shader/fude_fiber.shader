@@ -39,6 +39,7 @@ Shader "enfutu/fude_fiber"
         float4 _MainTex_ST;
 
         float4 _Start, _Hit, _End;
+        int _HitCount;
 
         v2f vert (appdata v)
         {
@@ -51,13 +52,22 @@ Shader "enfutu/fude_fiber"
 
             int myNum = floor(v.uv.y * 10);     //0Å`10Ç‹Ç≈
             float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz;
+            
+            float3 invisible = wv;
 
-            float3 vec = _Start - _End;
-            wv += vec * myNum * .1;
+            //2éüÉxÉWÉFã»ê¸
+            float3 p0 = lerp(_Start, _Hit, myNum * .1);
+            float3 p1 = lerp(_Hit, _End, myNum * .1);
+            float3 p2 = lerp(p0, p1, myNum * .1);
+            wv += p2 - _Start;
 
-
+            float ortho = unity_OrthoParams.w;
+            if(ortho == 1)
+            {
+                wv = lerp(invisible, wv, _HitCount * .1);
+            }
             v.vertex = mul(unity_WorldToObject, float4(wv, 1));
-                    
+            
             o.vertex = UnityObjectToClipPos(v.vertex);
             o.uv = TRANSFORM_TEX(v.uv, _MainTex);
             return o;
@@ -67,7 +77,6 @@ Shader "enfutu/fude_fiber"
         Pass
         {
             CGPROGRAM
-
             fixed4 frag (v2f i) : SV_Target
             {
                 // single pass instanced rendering
@@ -90,8 +99,8 @@ Shader "enfutu/fude_fiber"
             #pragma target 3.0
             
             #pragma vertex vert
-            #pragma fragment fragShadow
-            #pragma multi_compile_shadowcaster
+            //#pragma fragment fragShadow
+            //#pragma multi_compile_shadowcaster
 
             fixed4 frag (v2f i) : SV_Target
             {

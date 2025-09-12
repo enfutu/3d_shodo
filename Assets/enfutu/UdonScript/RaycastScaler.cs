@@ -14,6 +14,7 @@ namespace enfutu.UdonScript
         public float Radius = .02f;
         public int count;
         private GameObject[] _raycaster;
+        private Raycaster[] _script;
         [SerializeField] GameObject _source;
         public BlitSystem BlitSc;
 
@@ -25,7 +26,9 @@ namespace enfutu.UdonScript
             BlitSc.count = count;
             BlitSc.Boot();
 
+            _oldPos = _startBase.position;
             _raycaster = new GameObject[count];
+            _script = new Raycaster[count];
 
             Vector3 forward = this.transform.forward;
 
@@ -46,16 +49,45 @@ namespace enfutu.UdonScript
 
                 _raycaster[i] = Instantiate(_source, pos, Quaternion.identity, this.transform);
 
-                var script = _raycaster[i].GetComponent<Raycaster>();
+                float randomAngle = Random.Range(0f, 360f);
+                Quaternion randomRot = Quaternion.AngleAxis(randomAngle, forward);
+                _raycaster[i].transform.rotation = randomRot;
 
-                //script.StartBase.position = _startBase.position;
-                script.StartBase.position = pos;
-                script.EndBase.position = _endBase.position;
-                script.ID = i;
-                script.BlitSc = BlitSc;
+                _script[i] = _raycaster[i].GetComponent<Raycaster>();
 
-                script.Boot();
+                //_script[i].StartBase.position = _startBase.position;
+                _script[i].StartBase.position = pos;
+                _script[i].EndBase.position = _endBase.position;
+                _script[i].ID = i;
+                _script[i].BlitSc = BlitSc;
+
+                _script[i].Boot();
             }
         }
+
+        private Vector3 _oldPos; 
+        private bool _isFreeze = false;
+        void Update()
+        {
+            Vector3 currentVec = (_startBase.position - _oldPos).normalized;
+            Vector3 forward = this.transform.forward;
+
+            float d = Vector3.Dot(forward, currentVec);
+
+            if(0f < d) { _isFreeze = true; }
+            else { _isFreeze = false; }
+
+            _oldPos = _startBase.position;
+
+            Debug.Log("isFreeze : " + _isFreeze);
+
+            for(int i = 0; i < count; i++)
+            {
+                _script[i].IsFreeze = _isFreeze;
+            }
+
+
+        }
+
     }
 }

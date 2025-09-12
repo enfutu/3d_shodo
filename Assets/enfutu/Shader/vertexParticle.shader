@@ -142,7 +142,7 @@ Shader "enfutu/vertexParticle"
 
                 float dist = 1 - length(st - .5);
 
-                clip(dist - .5);
+                clip(dist - .8);
 
 
                 // apply fog

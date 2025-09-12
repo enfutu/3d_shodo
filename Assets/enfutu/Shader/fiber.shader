@@ -4,6 +4,7 @@ Shader "enfutu/fiber"
     {
         _Color ("Color", Color) = (0,0,0,0)
         _MainTex ("Texture", 2D) = "white" {}
+        _FrashMap ("FrashMap", 2D) = "black" {}
     }
     SubShader
     {
@@ -40,7 +41,7 @@ Shader "enfutu/fiber"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            sampler2D _MainTex;
+            sampler2D _MainTex, _FrashMap;
             float4 _MainTex_ST, _Color;
 
             v2f vert (appdata v)
@@ -66,16 +67,20 @@ Shader "enfutu/fiber"
 
                 fixed4 col = 1;//tex2D(_MainTex, st);
                 
-                col = length(tex2D(_MainTex, i.uv)) * _Color;
+                //col = length(tex2D(_MainTex, i.uv)) * _Color;
                 
+                float frash = tex2D(_FrashMap, i.uv).r;
+                col = frash * _Color;
+
+                clip(frash - .5);
                               
                 //float offset = lerp(.01, 1, col.a);
-                float offset = lerp(.01, .01, col.a);
+                //float offset = lerp(.01, .01, col.a);
 
                 //å©ÇΩñ⁄ÇêÆÇ¶ÇÈÇ‚Ç¬Å´
-                float a = (st.y * 4096) % 1;
-                a = step(.5 - offset, a) * step(a, .5 + offset); 
-                clip(a - .1);
+                //float a = (st.y * 4096) % 1;
+                //a = step(.5 - offset, a) * step(a, .5 + offset); 
+                //clip(a - .1);
                
                 return col;
             }

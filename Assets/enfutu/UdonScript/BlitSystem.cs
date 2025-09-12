@@ -12,6 +12,8 @@ namespace enfutu.UdonScript
         public Material MarkUpdateMat;
         [SerializeField] RenderTexture mark0;
         [SerializeField] RenderTexture mark1;
+        public Material FrashFiberMat;
+        [SerializeField] RenderTexture frashMap;
 
         public int count;
         public Vector4[] PositionsArray;
@@ -23,6 +25,7 @@ namespace enfutu.UdonScript
         {
             PositionsArray = new Vector4[count];
             MarkUpdateMat.SetInt("_MaxLength", count);
+            FrashFiberMat.SetInt("_MaxLength", count);
             boot = true;
         }
 
@@ -32,6 +35,7 @@ namespace enfutu.UdonScript
             if (!boot) return;
 
             MarkUpdateMat.SetVectorArray("_Positions", PositionsArray);
+            FrashFiberMat.SetVectorArray("_Positions", PositionsArray);
 
             if (blink)
             {
@@ -41,6 +45,8 @@ namespace enfutu.UdonScript
             {
                 Blit1();
             }
+
+            Blit_Frash();
         }
 
         //Blit
@@ -56,6 +62,11 @@ namespace enfutu.UdonScript
             blink = !blink;
             MarkUpdateMat.SetTexture("_Src", mark1);
             VRCGraphics.Blit(null, mark0, MarkUpdateMat);
+        }
+
+        public void Blit_Frash()
+        {
+            VRCGraphics.Blit(null, frashMap, FrashFiberMat);
         }
     }
 }

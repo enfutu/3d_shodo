@@ -296,6 +296,7 @@ Transform:
   - {fileID: 775902565}
   - {fileID: 2046747686}
   - {fileID: 1255560494}
+  - {fileID: 1166717196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &187170653 stripped
@@ -752,6 +753,8 @@ MonoBehaviour:
   MarkUpdateMat: {fileID: 2100000, guid: ccb9b4f27c870824a8efa7c1d7866643, type: 2}
   mark0: {fileID: 8400000, guid: fdaca178b3ade9547ac42a2347c0da91, type: 2}
   mark1: {fileID: 8400000, guid: accf99591dddfeb41a54c292d42db797, type: 2}
+  FrashFiberMat: {fileID: 2100000, guid: 6c36880588d70c54ea5d17e0233cfaf7, type: 2}
+  frashMap: {fileID: 8400000, guid: 8771c0613ba98e847bb5e47ce7dc7200, type: 2}
   count: 0
   PositionsArray: []
 --- !u!1 &304139626 stripped
@@ -1180,8 +1183,8 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 447620491}
   _startBase: {fileID: 1909836732}
   _endBase: {fileID: 692982524}
-  Radius: 0.1
-  count: 50
+  Radius: 0.05
+  count: 30
   _source: {fileID: 1055084579}
   BlitSc: {fileID: 299166147}
 --- !u!1 &447824680 stripped
@@ -1702,7 +1705,7 @@ Transform:
   m_GameObject: {fileID: 692982523}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000059604645, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.17}
+  m_LocalPosition: {x: 0, y: -0, z: 2.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2575,6 +2578,7 @@ MonoBehaviour:
   Fude: {fileID: 1711813854318355095}
   ID: 0
   BlitSc: {fileID: 0}
+  IsFreeze: 0
 --- !u!114 &1057130192 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 615129603728805773, guid: a4b4379c091e42941a6f1f2f9c186b74,
@@ -9225,6 +9229,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b210764350c1e3b45b60e0c0d6e20c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1166717195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166717196}
+  - component: {fileID: 1166717198}
+  - component: {fileID: 1166717197}
+  m_Layer: 0
+  m_Name: Quad (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1166717196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166717195}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.346, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 184321837}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1166717197
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166717195}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 1862080242b1f6e499e6cc477534a82d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1166717198
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166717195}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1187003186
 GameObject:
   m_ObjectHideFlags: 0
@@ -10205,7 +10292,7 @@ PrefabInstance:
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
       propertyPath: screenTargets.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
@@ -10221,17 +10308,17 @@ PrefabInstance:
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
       propertyPath: screenTargetModes.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
       propertyPath: avProPropertyNames.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
       propertyPath: screenTargetIndeces.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
@@ -10251,12 +10338,12 @@ PrefabInstance:
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
       propertyPath: screenTargetPropertyNames.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
       propertyPath: screenTargetDefaultTextures.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 966192547096765255, guid: a4b4379c091e42941a6f1f2f9c186b74,
         type: 3}
@@ -12594,7 +12681,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ef81581df09892444984a5511930df05,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13714,7 +13801,7 @@ Transform:
   m_GameObject: {fileID: 919132148325368642}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13934,7 +14021,7 @@ MonoBehaviour:
   useAssignedLayers: 0
   DynamicPrefabs: []
   DynamicMaterials:
-  - {fileID: 2100000, guid: 2898f96197281fd40b68cee86069d25b, type: 2}
+  - {fileID: 2100000, guid: aaa78832660c334408e0873362608700, type: 2}
   - {fileID: 2100000, guid: e81e61c053146804a88566fd5af86afa, type: 2}
   - {fileID: 2100000, guid: e86e7281176dae945bd655f34805ed55, type: 2}
   - {fileID: 2100000, guid: 3f13a5d1eb038764b804d1aabffed55f, type: 2}
@@ -13957,13 +14044,15 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b24ed807dd7dc224baf5390f46738647, type: 2}
   - {fileID: 2100000, guid: 51d72acecdb1ba249957953415f8e29b, type: 2}
   - {fileID: 2100000, guid: c815f7613a04b724089c206857e57c6a, type: 2}
-  - {fileID: 2100000, guid: aaa78832660c334408e0873362608700, type: 2}
   - {fileID: 2100000, guid: a509c6bccb441ba4b8b06e6901ee3bdf, type: 2}
   - {fileID: 2100000, guid: 7659df2a5c683224194cee263ed85e6e, type: 2}
   - {fileID: 2100000, guid: f6d16de45dddb2b468f57adc22f27859, type: 2}
+  - {fileID: 2100000, guid: 1862080242b1f6e499e6cc477534a82d, type: 2}
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e40a725749fb3e34b9a2494dce3816b9, type: 2}
   - {fileID: 2100000, guid: 85de4882d59df644da58b23a63ace72d, type: 2}
   - {fileID: 2100000, guid: c4c509a7538788a43a2b329fa9533fe0, type: 2}
+  - {fileID: 2100000, guid: 2898f96197281fd40b68cee86069d25b, type: 2}
   - {fileID: 2100000, guid: b5482cb7b3686864c81ced071f57bf03, type: 2}
   LightMapsNear: []
   LightMapsFar: []
