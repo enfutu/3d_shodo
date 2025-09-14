@@ -63,6 +63,8 @@ namespace enfutu.UdonScript
 
                 _script[i].Boot();
             }
+
+            _source.SetActive(false);
         }
 
         private Vector3 _oldPos; 

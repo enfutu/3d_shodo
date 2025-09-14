@@ -54,7 +54,8 @@ namespace enfutu.UdonScript
         private float rayDistance = 0f;
         private void raychan()
         {
-            Vector3 vec = (_end - _start).normalized;
+            //Vector3 vec = (_end - _start).normalized;
+            Vector3 vec = (_hit - _start).normalized;
             Ray ray = new Ray(_start, vec);
             Debug.DrawRay(_start, vec * rayDistance, Color.red);
 
@@ -99,9 +100,9 @@ namespace enfutu.UdonScript
  
                 //_end = Vector3.Lerp(_end, EndBase.position, .001f);             //戻ろうとする
                 //_endの真の座標を決める
-                Vector3 vec = (_hit - _start).normalized;
-                Vector3 endTarget = _start + vec * rayDistance;
-                _end = Vector3.Lerp(_end, endTarget, .05f);
+                //Vector3 vec = (_hit - _start).normalized;
+                //Vector3 endTarget = _start + vec * rayDistance;
+                //_end = Vector3.Lerp(_end, endTarget, .05f);
             }
             else
             {
@@ -109,8 +110,8 @@ namespace enfutu.UdonScript
 
                 //_hitと_endは戻ろうとする
                 Vector3 vec = (EndBase.position - this.transform.position).normalized;
-                _hit = Vector3.Lerp(_hit, _start + vec * rayDistance * .5f, .1f);
-                _end = Vector3.Lerp(_end, _start + vec * rayDistance, .05f);              
+                _hit = Vector3.Lerp(_hit, _start + vec * rayDistance * .5f, .05f);
+                _end = Vector3.Lerp(_end, _start + vec * rayDistance, .01f);              
             }
 
             //筆が伸びないように長さを整える。

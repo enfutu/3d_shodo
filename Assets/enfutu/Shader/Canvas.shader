@@ -2,6 +2,8 @@ Shader "enfutu/Canvas"
 {
     Properties
     {
+        _ID ("ID", int) = 0
+        _MaxLength ("MaxLength", int) = 0
         _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
@@ -40,6 +42,7 @@ Shader "enfutu/Canvas"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            int _ID, _MaxLength;
 
             v2f vert (appdata v)
             {
@@ -61,12 +64,34 @@ Shader "enfutu/Canvas"
                 UNITY_SETUP_INSTANCE_ID(i);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
+                //float offset = 1 / (_MaxLength + .00001);
+                //float num = offset * _ID;
+                
+
                 float2 st = i.uv;
                 st.x = 1 - st.x;
 
-                fixed4 col = tex2D(_MainTex, st);
+                //ID : 0Å`100
+                float _x = _ID % 10;        //0Å`10
+                float _y = floor(_ID * .1); //0Å`10
+                
+                st += float2(_x, _y);
+                
+                st *= .1;
 
-                //clip(length(col.rgb) - .5);
+
+                fixed4 lod0 = tex2Dlod(_MainTex, float4(st, 0, 0)) * .5;
+                fixed4 lod1 = tex2Dlod(_MainTex, float4(st, 0, 1)) * .2;
+                fixed4 lod2 = tex2Dlod(_MainTex, float4(st, 0, 2)) * .1;
+                fixed4 col = lod0 + lod1 + lod2; 
+
+                //0Å`1ÇÃíl
+                float depth = col.r;
+                
+                clip(depth - .2);
+
+                col = 1;
+
                 return col;
             }
             ENDCG

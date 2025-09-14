@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: vertexParticle
-  m_Shader: {fileID: 4800000, guid: 16a8dca41e503ee438a741e7546793cd, type: 3}
+  m_Name: ResetRT
+  m_Shader: {fileID: 4800000, guid: 2c0acbdffe15b8e4798b1a5d49df988f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -44,11 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: f352a230f926e39429097ebd60535e61, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Map:
-        m_Texture: {fileID: 8400000, guid: a33cb829c5218c84f8ac8a343c090ed5, type: 2}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

@@ -40,7 +40,7 @@ Shader "enfutu/vertexParticle"
                 float4 vertex : SV_POSITION;
                 float2 uv2 : TEXCOORD1;
                 float4 screenPos : TEXCOORD2;
-
+                float3 center : TEXCOORD3;
                 // single pass instanced rendering
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
@@ -119,7 +119,7 @@ Shader "enfutu/vertexParticle"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uv2 = TRANSFORM_TEX(v.uv2, _MainTex);
                 o.screenPos = ComputeScreenPos(o.vertex);
-
+                o.center= center;
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
@@ -134,14 +134,14 @@ Shader "enfutu/vertexParticle"
 
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, st);
-                col = 0;
+                col = 1;
 
                 //col.rg = st;
-                col.rg = i.screenPos.xy / i.screenPos.w;
-
+                //col.rg = i.screenPos.xy / i.screenPos.w;
 
                 float dist = 1 - length(st - .5);
 
+                float rand = random(i.center.xy);
                 clip(dist - .8);
 
 
