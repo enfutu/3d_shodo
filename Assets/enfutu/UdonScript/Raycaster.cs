@@ -95,14 +95,7 @@ namespace enfutu.UdonScript
                 else
                 {
                     _hit = Vector3.Lerp(_hit, hitPos, .05f);
-                    _freezeVec = (_hit - _start).normalized;            //押し付けていない時に_freezeVecを更新する。
                 }
- 
-                //_end = Vector3.Lerp(_end, EndBase.position, .001f);             //戻ろうとする
-                //_endの真の座標を決める
-                //Vector3 vec = (_hit - _start).normalized;
-                //Vector3 endTarget = _start + vec * rayDistance;
-                //_end = Vector3.Lerp(_end, endTarget, .05f);
             }
             else
             {
@@ -112,6 +105,12 @@ namespace enfutu.UdonScript
                 Vector3 vec = (EndBase.position - this.transform.position).normalized;
                 _hit = Vector3.Lerp(_hit, _start + vec * rayDistance * .5f, .05f);
                 _end = Vector3.Lerp(_end, _start + vec * rayDistance, .01f);              
+            }
+
+            //押し付けていない時、_freezeVecを更新する。
+            if (!IsFreeze) 
+            {
+                _freezeVec = (_hit - _start).normalized;
             }
 
             //筆が伸びないように長さを整える。

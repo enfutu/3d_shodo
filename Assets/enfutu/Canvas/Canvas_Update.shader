@@ -68,8 +68,8 @@ Shader "Unlit/Canvas_Update"
 
 
                 float depth = col.r;            //0`1
-                float offset = .18;             //•M‚ÌˆÊ’u‚É‡‚í‚¹‚é‚½‚ß‚Ì”÷’²®
-                depth += offset * step(.0001, depth);
+                //float offset = .18;             //•M‚ÌˆÊ’u‚É‡‚í‚¹‚é‚½‚ß‚Ì”÷’²®
+                //depth += offset * step(.0001, depth);
                 
                 float2 fst = floor(st * 10);    //1`10
 
@@ -93,8 +93,23 @@ Shader "Unlit/Canvas_Update"
                 float input = _x * _y;
                 depth *= input;
 
-                fixed4 src = tex2D(_Src, st);
-                col = max(depth, src.r);
+                //float check = tex2Dlod(_Src, float4(st, 0, 1)).r;
+                
+                float src = tex2D(_Src, st).r;
+                //if(.5 < check)
+                //{
+                //    src = check;
+                //}
+
+
+
+                
+
+                
+
+                col = step(.0001, src.r + depth);
+
+
 
                 return col;
             }

@@ -51,21 +51,25 @@ Shader "enfutu/fude_fiber"
             UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
             int myNum = floor(v.uv.y * 10);     //0Å`10Ç‹Ç≈
+            
+            //v.vertex.xyz *= max(.1, 1 - v.uv.y); 
+            
+            float ortho = unity_OrthoParams.w;
+            if(ortho == 1)
+            {
+                v.vertex.xyz *= _HitCount * .1;
+            }
+
+
             float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz;
             
-            float3 invisible = wv;
-
             //2éüÉxÉWÉFã»ê¸
             float3 p0 = lerp(_Start, _Hit, myNum * .1);
             float3 p1 = lerp(_Hit, _End, myNum * .1);
             float3 p2 = lerp(p0, p1, myNum * .1);
             wv += p2 - _Start;
 
-            float ortho = unity_OrthoParams.w;
-            if(ortho == 1)
-            {
-                wv = lerp(invisible, wv, _HitCount * .1);
-            }
+
             v.vertex = mul(unity_WorldToObject, float4(wv, 1));
             
             o.vertex = UnityObjectToClipPos(v.vertex);

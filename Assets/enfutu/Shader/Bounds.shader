@@ -1,9 +1,7 @@
-Shader "enfutu/Canvas"
+Shader "enfutu/Bounds"
 {
     Properties
     {
-        _ID ("ID", int) = 0
-        _MaxLength ("MaxLength", int) = 0
         _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader
@@ -11,7 +9,7 @@ Shader "enfutu/Canvas"
         Tags { "RenderType"="Opaque" }
         LOD 100
 
-        Cull Off
+        cull off
 
         Pass
         {
@@ -42,7 +40,6 @@ Shader "enfutu/Canvas"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            int _ID, _MaxLength;
 
             v2f vert (appdata v)
             {
@@ -64,33 +61,9 @@ Shader "enfutu/Canvas"
                 UNITY_SETUP_INSTANCE_ID(i);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
-                //float offset = 1 / (_MaxLength + .00001);
-                //float num = offset * _ID;
-                
+                fixed4 col = tex2D(_MainTex, i.uv);
 
-                float2 st = i.uv;
-                st.x = 1 - st.x;
-
-                //ID : 0Å`100
-                float _x = _ID % 10;        //0Å`10
-                float _y = floor(_ID * .1); //0Å`10
-                
-                st += float2(_x, _y);
-                
-                st *= .1;
-
-
-                fixed lod0 = tex2Dlod(_MainTex, float4(st, 0, 0)).r * .5;
-                fixed lod1 = tex2Dlod(_MainTex, float4(st, 0, 1)).r * .2;
-                fixed lod2 = tex2Dlod(_MainTex, float4(st, 0, 2)).r * .1;
-                fixed marge = lod0 + lod1 + lod2;
-                
-                //0Å`1ÇÃíl
-                float depth = marge;
-                
-                clip(depth - .5);
-
-                fixed4 col = 1;
+                clip(col.r - .5);
 
                 return col;
             }

@@ -22,10 +22,6 @@ namespace enfutu.UdonScript
         {
             if(count <= 0) { return; }
 
-            //BlitSystemSetup
-            BlitSc.count = count;
-            BlitSc.Boot();
-
             _oldPos = _startBase.position;
             _raycaster = new GameObject[count];
             _script = new Raycaster[count];
@@ -65,30 +61,42 @@ namespace enfutu.UdonScript
             }
 
             _source.SetActive(false);
+            
+            //BlitSystemSetup
+            BlitSc.count = count;
+            BlitSc.Boot();
         }
 
         private Vector3 _oldPos; 
         private bool _isFreeze = false;
+        private int _freezeCount = 0;
         void Update()
+        {
+            float length = (_startBase.position - _oldPos).sqrMagnitude;
+            if(.01f < length) { calcFreeze(); }
+        }
+
+        private void calcFreeze()
         {
             Vector3 currentVec = (_startBase.position - _oldPos).normalized;
             Vector3 forward = this.transform.forward;
 
             float d = Vector3.Dot(forward, currentVec);
 
-            if(0f < d) { _isFreeze = true; }
+            if (0f < d) { _freezeCount = 10; }
+            else { _freezeCount--; }
+
+            if (0 < _freezeCount) { _isFreeze = true; }
             else { _isFreeze = false; }
 
             _oldPos = _startBase.position;
 
             Debug.Log("isFreeze : " + _isFreeze);
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 _script[i].IsFreeze = _isFreeze;
             }
-
-
         }
 
     }
