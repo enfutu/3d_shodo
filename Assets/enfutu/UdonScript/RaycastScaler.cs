@@ -70,10 +70,21 @@ namespace enfutu.UdonScript
         private Vector3 _oldPos; 
         private bool _isFreeze = false;
         private int _freezeCount = 0;
+        private int _sumiCount = 0;
         void Update()
         {
             float length = (_startBase.position - _oldPos).sqrMagnitude;
-            if(.01f < length) { calcFreeze(); }
+            if(.01f < length) 
+            {
+                calcFreeze();
+            }
+
+            /*
+            if(.001f < length)
+            {
+                updateRaycasters();
+            }
+            */
         }
 
         private void calcFreeze()
@@ -83,12 +94,26 @@ namespace enfutu.UdonScript
 
             float d = Vector3.Dot(forward, currentVec);
 
-            if (0f < d) { _freezeCount = 10; }
-            else { _freezeCount--; }
+            if (0f < d) 
+            {
+                _freezeCount = 10;
+                if(0 < _sumiCount)
+                {
+                    _sumiCount--;
+                }
+            }
+            else
+            {
+                _freezeCount--;
+                if(_sumiCount < 100)
+                {
+                    _sumiCount++;
+                }
+            }
 
             if (0 < _freezeCount) { _isFreeze = true; }
             else { _isFreeze = false; }
-
+            
             _oldPos = _startBase.position;
 
             Debug.Log("isFreeze : " + _isFreeze);
@@ -96,8 +121,17 @@ namespace enfutu.UdonScript
             for (int i = 0; i < count; i++)
             {
                 _script[i].IsFreeze = _isFreeze;
+                _script[i].SumiCount = _sumiCount;
             }
         }
 
+        /*
+        private void updateRaycasters()
+        {
+            for (int i = 0; i < count; i++)
+            {
+                _script[i].CalledUpdate();
+            }
+        }*/
     }
 }

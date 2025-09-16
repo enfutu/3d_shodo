@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 240411508}
   - component: {fileID: 240411507}
   m_Layer: 13
-  m_Name: Cylinder
+  m_Name: Cylinder(Pickup)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,8 +394,7 @@ Transform:
   m_LocalScale: {x: 0.05, y: 0.5, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 447620490}
-  - {fileID: 299166145}
+  - {fileID: 1965183797}
   m_Father: {fileID: 657016465}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &240411507
@@ -778,12 +777,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299166144}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.782, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 1}
+  m_LocalRotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.05, y: 0.1, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 240411506}
+  m_Father: {fileID: 657016465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &299166146
 MonoBehaviour:
@@ -1227,6 +1226,7 @@ GameObject:
   - component: {fileID: 447620490}
   - component: {fileID: 447620492}
   - component: {fileID: 447620491}
+  - component: {fileID: 447620493}
   m_Layer: 13
   m_Name: RaycastScaler
   m_TagString: Untagged
@@ -1242,14 +1242,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447620489}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 0.9819998, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.20000003}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.000000059604645, z: 0.109000206}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.10000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1909836732}
   - {fileID: 692982524}
-  m_Father: {fileID: 240411506}
+  m_Father: {fileID: 657016465}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &447620491
 MonoBehaviour:
@@ -1305,6 +1305,33 @@ MonoBehaviour:
   count: 50
   _source: {fileID: 1055084579}
   BlitSc: {fileID: 299166147}
+--- !u!1773428102 &447620493
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447620489}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0, z: 0.109000206}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 1965183797}
+    weight: 1
 --- !u!1 &447824680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3152831197187173110, guid: 2674f268860583949b53b63df24489ea,
@@ -1688,6 +1715,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 240411506}
+  - {fileID: 447620490}
+  - {fileID: 299166145}
   - {fileID: 1030566366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2826,7 +2855,7 @@ MonoBehaviour:
   SynchronizePosition: 0
   AllowCollisionOwnershipTransfer: 0
   Reliable: 0
-  _syncMethod: 2
+  _syncMethod: 1
   serializedProgramAsset: {fileID: 11400000, guid: c5bbbdaf9af4c2c4fadc808750ec227d,
     type: 2}
   programSource: {fileID: 11400000, guid: 9322abb32b06c19488fe2980f0b2c7b1, type: 2}
@@ -2860,6 +2889,7 @@ MonoBehaviour:
   Fude: {fileID: 1711813854318355095}
   ID: 0
   BlitSc: {fileID: 0}
+  SumiCount: 0
   IsFreeze: 0
 --- !u!114 &1057130192 stripped
 MonoBehaviour:
@@ -13781,6 +13811,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b210764350c1e3b45b60e0c0d6e20c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1965183796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1965183797}
+  m_Layer: 13
+  m_Name: Constraint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1965183797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965183796}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.20000003}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 240411506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1986231063 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7478281477007360042, guid: a4b4379c091e42941a6f1f2f9c186b74,
@@ -14471,6 +14532,8 @@ MonoBehaviour:
   DynamicPrefabs: []
   DynamicMaterials:
   - {fileID: 2100000, guid: aaa78832660c334408e0873362608700, type: 2}
+  - {fileID: 2100000, guid: e81e61c053146804a88566fd5af86afa, type: 2}
+  - {fileID: 2100000, guid: c815f7613a04b724089c206857e57c6a, type: 2}
   - {fileID: 2100000, guid: e86e7281176dae945bd655f34805ed55, type: 2}
   - {fileID: 2100000, guid: 3f13a5d1eb038764b804d1aabffed55f, type: 2}
   - {fileID: 2100000, guid: 419ae9fed5372564c995339c60fd7ebf, type: 2}
@@ -14491,8 +14554,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b3889ddf2a4bd9346a4843eb47e0acb1, type: 2}
   - {fileID: 2100000, guid: b24ed807dd7dc224baf5390f46738647, type: 2}
   - {fileID: 2100000, guid: 51d72acecdb1ba249957953415f8e29b, type: 2}
-  - {fileID: 2100000, guid: e81e61c053146804a88566fd5af86afa, type: 2}
-  - {fileID: 2100000, guid: c815f7613a04b724089c206857e57c6a, type: 2}
   - {fileID: 2100000, guid: a509c6bccb441ba4b8b06e6901ee3bdf, type: 2}
   - {fileID: 2100000, guid: 7659df2a5c683224194cee263ed85e6e, type: 2}
   - {fileID: 2100000, guid: f6d16de45dddb2b468f57adc22f27859, type: 2}

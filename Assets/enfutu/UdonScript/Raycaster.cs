@@ -6,7 +6,10 @@ using VRC.Udon;
 
 namespace enfutu.UdonScript
 {
-    //[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    //毎フレーム更新するので負荷になっている
+    //毎フレームisHitが切り替わるので筆が震えてしまう。
+
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Raycaster : UdonSharpBehaviour
     {
         //base
@@ -20,7 +23,7 @@ namespace enfutu.UdonScript
         [HideInInspector] public int ID;
         [HideInInspector] public BlitSystem BlitSc;
 
-        void Start() { }
+        //void Start() { }
 
         bool _boot = false;
         public void Boot()
@@ -40,14 +43,35 @@ namespace enfutu.UdonScript
 
             _mat = Fude.material;
 
+            thresholdDist = (_hit - _start).sqrMagnitude;
             _boot = true;
         }
 
+        float thresholdDist = 0f;
         void Update()
+        {
+            if (!_boot) return;
+
+            _start = this.transform.position;
+
+            raychan();
+
+            /*
+            float len = (_hit - _start).sqrMagnitude;
+            if(thresholdDist < len)
+            {
+                raychan();
+            }
+            */
+        }
+
+        /*
+        public void CalledUpdate()
         {
             if (!_boot) return;
             raychan();
         }
+        */
 
         //raycast
         int layerMask = 1 << 25;
@@ -62,19 +86,18 @@ namespace enfutu.UdonScript
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
             {
-                if(_hitCount < 10) { _hitCount++; }
                 Vector2 uv = hit.textureCoord;
                 BlitSc.PositionsArray[ID] = uv;
                 setThreePoints(hit.point, true);
             }
             else
             {
-                if(0 < _hitCount) { _hitCount--; }
                 Vector3 _temp = _start + vec * rayDistance * .5f;
                 setThreePoints(_temp, false);
             }
         }
 
+        public int SumiCount = 0;
         private int _hitCount = 0;
         public bool IsFreeze = false;
         private Vector3 _freezeVec;
@@ -86,7 +109,7 @@ namespace enfutu.UdonScript
         {
             if (isHit)
             {
-                _start = this.transform.position;
+                if (_hitCount < 10) { _hitCount++; }
 
                 if (IsFreeze)
                 {
@@ -95,35 +118,40 @@ namespace enfutu.UdonScript
                 else
                 {
                     _hit = Vector3.Lerp(_hit, hitPos, .05f);
+
+                    //筆が伸びないように長さを整える。
+                    Vector3 vecToHit = (_hit - _start).normalized;
+                    _hit = _start + vecToHit * rayDistance * .5f;
                 }
             }
             else
             {
-                _start = this.transform.position;
-
                 //_hitと_endは戻ろうとする
                 Vector3 vec = (EndBase.position - this.transform.position).normalized;
                 _hit = Vector3.Lerp(_hit, _start + vec * rayDistance * .5f, .05f);
-                _end = Vector3.Lerp(_end, _start + vec * rayDistance, .01f);              
-            }
+                _end = Vector3.Lerp(_end, _start + vec * rayDistance, .01f);
 
+                //筆が伸びないように長さを整える。
+                Vector3 vecToHit = (_hit - _start).normalized;
+                _hit = _start + vecToHit * rayDistance * .5f;
+                Vector3 vecToEnd = (_end - _hit).normalized;
+                _end = _hit + vecToEnd * rayDistance * .5f;
+            }
+            
             //押し付けていない時、_freezeVecを更新する。
             if (!IsFreeze) 
             {
+                if (0 < _hitCount) { _hitCount--; }
                 _freezeVec = (_hit - _start).normalized;
             }
 
-            //筆が伸びないように長さを整える。
-            Vector3 vec0 = (_hit - _start).normalized;
-            _start = _start;
-            _hit = _start + vec0 * rayDistance * .5f;
-             Vector3 vec1 = (_end - _hit).normalized;
-            _end = _hit + vec1 * rayDistance * .5f;
+             Debug.Log("isHit : " + isHit);
 
             _mat.SetVector("_Start", _start);
             _mat.SetVector("_Hit", _hit);
             _mat.SetVector("_End", _end);
             _mat.SetInt("_HitCount", _hitCount);
+            _mat.SetInt("_Sumi", SumiCount);
 
         }
     }

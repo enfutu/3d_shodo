@@ -40,6 +40,7 @@ Shader "enfutu/fude_fiber"
 
         float4 _Start, _Hit, _End;
         int _HitCount;
+        int _Sumi;
 
         v2f vert (appdata v)
         {
@@ -57,7 +58,8 @@ Shader "enfutu/fude_fiber"
             float ortho = unity_OrthoParams.w;
             if(ortho == 1)
             {
-                v.vertex.xyz *= _HitCount * .1;
+                v.vertex.xyz *= saturate(_HitCount);
+                v.vertex.xyz *= _Sumi * .01;
             }
 
 
@@ -90,6 +92,7 @@ Shader "enfutu/fude_fiber"
                 // sample the texture
                 fixed4 col = 0;//tex2D(_MainTex, i.uv);
                 col.r = i.uv.y;
+                col.g += _Sumi * .01;
                 return col;
             }
             ENDCG
