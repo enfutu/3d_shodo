@@ -39,8 +39,7 @@ Shader "enfutu/fude_fiber"
         float4 _MainTex_ST;
 
         float4 _Start, _Hit, _End;
-        int _HitCount;
-        int _Sumi;
+        float _InnerRange;
 
         v2f vert (appdata v)
         {
@@ -53,25 +52,26 @@ Shader "enfutu/fude_fiber"
 
             int myNum = floor(v.uv.y * 10);     //0Å`10Ç‹Ç≈
             
-            //v.vertex.xyz *= max(.1, 1 - v.uv.y); 
+            v.vertex.xyz *= max(.1, 1 - v.uv.y); 
             
-            float ortho = unity_OrthoParams.w;
-            if(ortho == 1)
-            {
-                v.vertex.xyz *= saturate(_HitCount);
-                v.vertex.xyz *= _Sumi * .01;
-            }
-
-
             float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz;
-            
             //2éüÉxÉWÉFã»ê¸
             float3 p0 = lerp(_Start, _Hit, myNum * .1);
             float3 p1 = lerp(_Hit, _End, myNum * .1);
             float3 p2 = lerp(p0, p1, myNum * .1);
             wv += p2 - _Start;
 
-
+            /*
+            float ortho = unity_OrthoParams.w;
+            //if(ortho == 1)
+            //{
+                float len = length(wv - _Start);
+                if(len < _InnerRange)
+                {
+                    wv = wv;
+                }
+            //}
+            */
             v.vertex = mul(unity_WorldToObject, float4(wv, 1));
             
             o.vertex = UnityObjectToClipPos(v.vertex);
@@ -92,7 +92,7 @@ Shader "enfutu/fude_fiber"
                 // sample the texture
                 fixed4 col = 0;//tex2D(_MainTex, i.uv);
                 col.r = i.uv.y;
-                col.g += _Sumi * .01;
+                //col.g += _Sumi * .01;
                 return col;
             }
             ENDCG

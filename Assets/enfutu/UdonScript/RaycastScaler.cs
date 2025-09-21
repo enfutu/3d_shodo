@@ -9,9 +9,16 @@ namespace enfutu.UdonScript
     //[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class RaycastScaler : UdonSharpBehaviour
     {
+        /*
         [SerializeField] Transform _startBase;
+        [SerializeField] Transform _hitBase;
         [SerializeField] Transform _endBase;
-        public float Radius = .02f;
+        public float Radius = .01f;
+        
+        public float FudeOpenRadius_Min = .1f;
+        public float FudeOpenRadius_Max = .1f;
+        private float fudeOpenRadiusOffset = 0;
+         
         public int count;
         private GameObject[] _raycaster;
         private Raycaster[] _script;
@@ -22,11 +29,15 @@ namespace enfutu.UdonScript
         {
             if(count <= 0) { return; }
 
+            fudeOpenRadiusOffset = (FudeOpenRadius_Max - FudeOpenRadius_Min) * .1f;
+            fudeOpenRadius = Radius;
+
             _oldPos = _startBase.position;
             _raycaster = new GameObject[count];
             _script = new Raycaster[count];
 
             Vector3 forward = this.transform.forward;
+            _hitBase.position = Vector3.Lerp(_endBase.position, _startBase.position, .5f);
 
             Vector3 up = Vector3.up;
             if (Vector3.Dot(forward, up) > 0.99f)
@@ -40,8 +51,8 @@ namespace enfutu.UdonScript
             for (int i = 0; i < count; i++)
             {               
                 float angle = (Mathf.PI * 2 / count) * i;
-                Vector3 offset = (Mathf.Cos(angle) * right + Mathf.Sin(angle) * planeUp) * Radius;
-                Vector3 pos = this.transform.position + offset;
+                Vector3 offset = (Mathf.Cos(angle) * right + Mathf.Sin(angle) * planeUp);
+                Vector3 pos = this.transform.position + offset * Radius;
 
                 _raycaster[i] = Instantiate(_source, pos, Quaternion.identity, this.transform);
 
@@ -53,7 +64,9 @@ namespace enfutu.UdonScript
 
                 //_script[i].StartBase.position = _startBase.position;
                 _script[i].StartBase.position = pos;
+                _script[i].HitBase = _hitBase;
                 _script[i].EndBase.position = _endBase.position;
+                _script[i].OpenVec = offset;
                 _script[i].ID = i;
                 _script[i].BlitSc = BlitSc;
 
@@ -78,15 +91,10 @@ namespace enfutu.UdonScript
             {
                 calcFreeze();
             }
-
-            /*
-            if(.001f < length)
-            {
-                updateRaycasters();
-            }
-            */
         }
+        
 
+        private float fudeOpenRadius = 0f;
         private void calcFreeze()
         {
             Vector3 currentVec = (_startBase.position - _oldPos).normalized;
@@ -97,17 +105,19 @@ namespace enfutu.UdonScript
             if (0f < d) 
             {
                 _freezeCount = 10;
-                if(0 < _sumiCount)
+                
+                if(fudeOpenRadius < FudeOpenRadius_Max)
                 {
-                    _sumiCount--;
+                    fudeOpenRadius += fudeOpenRadiusOffset;
                 }
             }
             else
             {
                 _freezeCount--;
-                if(_sumiCount < 100)
+
+                if (FudeOpenRadius_Min < fudeOpenRadius)
                 {
-                    _sumiCount++;
+                    fudeOpenRadius -= fudeOpenRadiusOffset;
                 }
             }
 
@@ -121,17 +131,10 @@ namespace enfutu.UdonScript
             for (int i = 0; i < count; i++)
             {
                 _script[i].IsFreeze = _isFreeze;
-                _script[i].SumiCount = _sumiCount;
+                _script[i].OpenRadius = fudeOpenRadius;
+                //_script[i].SumiCount = _sumiCount;
             }
         }
-
-        /*
-        private void updateRaycasters()
-        {
-            for (int i = 0; i < count; i++)
-            {
-                _script[i].CalledUpdate();
-            }
-        }*/
+        */
     }
 }

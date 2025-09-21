@@ -6,15 +6,13 @@ using VRC.Udon;
 
 namespace enfutu.UdonScript
 {
-    //毎フレーム更新するので負荷になっている
-    //毎フレームisHitが切り替わるので筆が震えてしまう。
-
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Raycaster : UdonSharpBehaviour
     {
         //base
-        public Transform StartBase;
+        //public Transform StartBase;
         public Transform EndBase;
+        [HideInInspector] public Transform HitBase;     //Scalerから渡す
         public MeshRenderer Fude;
 
         private Material _mat;
@@ -26,9 +24,10 @@ namespace enfutu.UdonScript
         //void Start() { }
 
         bool _boot = false;
+        [HideInInspector] public float InnerRange;
         public void Boot()
         {
-            _start = StartBase.position;
+            _start = this.transform.position;
             _end = EndBase.position;
 
             rayDistance = Vector3.Distance(_end, _start);
@@ -55,23 +54,7 @@ namespace enfutu.UdonScript
             _start = this.transform.position;
 
             raychan();
-
-            /*
-            float len = (_hit - _start).sqrMagnitude;
-            if(thresholdDist < len)
-            {
-                raychan();
-            }
-            */
         }
-
-        /*
-        public void CalledUpdate()
-        {
-            if (!_boot) return;
-            raychan();
-        }
-        */
 
         //raycast
         int layerMask = 1 << 25;
@@ -97,6 +80,8 @@ namespace enfutu.UdonScript
             }
         }
 
+        public float OpenRadius = 0;
+        public Vector3 OpenVec;
         public int SumiCount = 0;
         private int _hitCount = 0;
         public bool IsFreeze = false;
@@ -118,24 +103,19 @@ namespace enfutu.UdonScript
                 else
                 {
                     _hit = Vector3.Lerp(_hit, hitPos, .05f);
-
-                    //筆が伸びないように長さを整える。
-                    Vector3 vecToHit = (_hit - _start).normalized;
-                    _hit = _start + vecToHit * rayDistance * .5f;
                 }
             }
             else
             {
                 //_hitと_endは戻ろうとする
-                Vector3 vec = (EndBase.position - this.transform.position).normalized;
-                _hit = Vector3.Lerp(_hit, _start + vec * rayDistance * .5f, .05f);
-                _end = Vector3.Lerp(_end, _start + vec * rayDistance, .01f);
+                //Vector3 temp_HitPos = HitBase.position + (OpenVec * OpenRadius);
+                //Vector3 vec0 = (temp_HitPos - _start).normalized; 
+                //_hit = Vector3.Lerp(_hit, _start + vec0 * rayDistance * .5f, .05f);
+                //Vector3 vec1 = (EndBase.position - this.transform.position).normalized;
+                //_end = Vector3.Lerp(_end, _start + vec1 * rayDistance, .01f);
 
-                //筆が伸びないように長さを整える。
-                Vector3 vecToHit = (_hit - _start).normalized;
-                _hit = _start + vecToHit * rayDistance * .5f;
-                Vector3 vecToEnd = (_end - _hit).normalized;
-                _end = _hit + vecToEnd * rayDistance * .5f;
+                _hit = Vector3.Lerp(_hit, Vector3.Lerp(_start, EndBase.position, .5f), .1f);
+                _end = Vector3.Lerp(_end, EndBase.position, .05f);
             }
             
             //押し付けていない時、_freezeVecを更新する。
@@ -145,14 +125,16 @@ namespace enfutu.UdonScript
                 _freezeVec = (_hit - _start).normalized;
             }
 
-             Debug.Log("isHit : " + isHit);
+            //筆が伸びないように長さを整える。
+            Vector3 vecToHit = (_hit - _start).normalized;
+            _hit = _start + vecToHit * rayDistance * .5f;
+            Vector3 vecToEnd = (_end - _hit).normalized;
+            _end = _hit + vecToEnd * rayDistance * .5f;
 
             _mat.SetVector("_Start", _start);
             _mat.SetVector("_Hit", _hit);
             _mat.SetVector("_End", _end);
-            _mat.SetInt("_HitCount", _hitCount);
-            _mat.SetInt("_Sumi", SumiCount);
-
+            _mat.SetFloat("_InnerRange", InnerRange);
         }
     }
 }

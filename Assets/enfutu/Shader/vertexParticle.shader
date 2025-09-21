@@ -107,7 +107,7 @@ Shader "enfutu/vertexParticle"
                 float4 q  = quatFromTo(n0, vec);
 
                 float size = saturate(1 - length(noise * 2));
-                size = pow(size, 2) * .1;
+                size = pow(size, 2) * .02;
                 float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz * size;
                 wv = rotateByQuat(wv, q);
 
