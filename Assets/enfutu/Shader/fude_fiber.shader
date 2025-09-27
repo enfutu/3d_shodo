@@ -6,10 +6,17 @@ Shader "enfutu/fude_fiber"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque" "Queue" = "Geometry"}
         LOD 100
 
         Cull Off
+        
+        Stencil
+        {
+            Ref 2
+            Comp always
+            Pass replace
+        }
 
         CGINCLUDE
         #pragma vertex vert
@@ -29,6 +36,8 @@ Shader "enfutu/fude_fiber"
         {
             float2 uv : TEXCOORD0;
             float4 vertex : SV_POSITION;
+            float3 wv : TEXCOORD1;
+            float value : TEXCOORD2;
 
             // single pass instanced rendering
             UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -38,8 +47,10 @@ Shader "enfutu/fude_fiber"
         sampler2D _MainTex;
         float4 _MainTex_ST;
 
-        float4 _Start, _Hit, _End;
-        float _InnerRange;
+        float4 _Start, _Hit, _End, _EndBase;
+        
+        //float4 _Center;
+        //float _InnerRange;
 
         v2f vert (appdata v)
         {
@@ -51,27 +62,32 @@ Shader "enfutu/fude_fiber"
             UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
             int myNum = floor(v.uv.y * 10);     //0Å`10Ç‹Ç≈
-            
-            v.vertex.xyz *= max(.1, 1 - v.uv.y); 
-            
+
             float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz;
+            float3 _wv = wv;
             //2éüÉxÉWÉFã»ê¸
             float3 p0 = lerp(_Start, _Hit, myNum * .1);
             float3 p1 = lerp(_Hit, _End, myNum * .1);
             float3 p2 = lerp(p0, p1, myNum * .1);
             wv += p2 - _Start;
+            //íºê¸
+            _wv += lerp(_Start, _EndBase, myNum * .1) - _Start;
 
-            /*
+            float deformPow = length(wv - _wv);
+            deformPow = saturate(deformPow * 5);
+            o.value = deformPow;
+            
             float ortho = unity_OrthoParams.w;
-            //if(ortho == 1)
-            //{
-                float len = length(wv - _Start);
-                if(len < _InnerRange)
-                {
-                    wv = wv;
-                }
-            //}
-            */
+            if(ortho == 1)
+            {
+                v.vertex.xyz *= max(0, (1 - v.uv.y)) * deformPow;
+            }
+
+            //à⁄ìÆó í≤Ç◊ÇƒëæÇ≥ÇïœÇ¶ÇΩÇÃÇ≈Ç‡Ç§àÍâÒã»Ç∞Ç»Ç®Ç∑ 
+            wv = mul(unity_ObjectToWorld, v.vertex).xyz;
+            wv += p2 - _Start;
+            o.wv = wv;
+
             v.vertex = mul(unity_WorldToObject, float4(wv, 1));
             
             o.vertex = UnityObjectToClipPos(v.vertex);

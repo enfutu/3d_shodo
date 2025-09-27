@@ -24,7 +24,8 @@ namespace enfutu.UdonScript
         //void Start() { }
 
         bool _boot = false;
-        [HideInInspector] public float InnerRange;
+        //[HideInInspector] public float InnerRange;
+        //[HideInInspector] public Vector3 SystemCenterPosition;
         public void Boot()
         {
             _start = this.transform.position;
@@ -94,7 +95,7 @@ namespace enfutu.UdonScript
         {
             if (isHit)
             {
-                if (_hitCount < 10) { _hitCount++; }
+                if (_hitCount < 100) { _hitCount += 10; }
 
                 if (IsFreeze)
                 {
@@ -114,8 +115,21 @@ namespace enfutu.UdonScript
                 //Vector3 vec1 = (EndBase.position - this.transform.position).normalized;
                 //_end = Vector3.Lerp(_end, _start + vec1 * rayDistance, .01f);
 
-                _hit = Vector3.Lerp(_hit, Vector3.Lerp(_start, EndBase.position, .5f), .1f);
-                _end = Vector3.Lerp(_end, EndBase.position, .05f);
+                float reposOffset_hit = 1f - Mathf.Clamp01(.01f * _hitCount);
+                float reposOffset_end = 1f - Mathf.Clamp01(.0314f * _hitCount);
+
+                /*
+                float reposOffset_hit = 1f;
+                float reposOffset_end = 1f;
+                if (0 < _hitCount)
+                {
+                    reposOffset_hit = .01f;
+                    reposOffset_end = .005f;
+                }
+                */
+
+                _hit = Vector3.Lerp(_hit, Vector3.Lerp(_start, EndBase.position, .5f), reposOffset_hit);
+                _end = Vector3.Lerp(_end, EndBase.position, reposOffset_end);
             }
             
             //押し付けていない時、_freezeVecを更新する。
@@ -134,7 +148,9 @@ namespace enfutu.UdonScript
             _mat.SetVector("_Start", _start);
             _mat.SetVector("_Hit", _hit);
             _mat.SetVector("_End", _end);
-            _mat.SetFloat("_InnerRange", InnerRange);
+            _mat.SetVector("_EndBase", EndBase.position);
+            //_mat.SetVector("_Center", SystemCenterPosition);
+            //_mat.SetFloat("_InnerRange", InnerRange);
         }
     }
 }

@@ -8,11 +8,19 @@ Shader "enfutu/fiber"
     }
     SubShader
     {
-        Tags { "Queue" = "Geometry" }
+        Tags { "RenderType"="Opaque" "Queue" = "Geometry+1" }
         //Tags { "Queue"="Transparent" "RenderType"="Transparent" }
         LOD 100
 
         cull off
+        
+        Stencil
+        {
+            Ref 2
+            Comp NotEqual
+            Pass replace
+        }
+
 
         Pass
         {

@@ -8,10 +8,16 @@ Shader "enfutu/Canvas"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque" "Queue" = "Geometry+1"}
         LOD 100
 
         Cull Off
+        Stencil
+        {
+            Ref 2
+            Comp NotEqual
+            Pass replace
+        }
 
         Pass
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using VRC.SDK3.Components;
+using Utilities = VRC.SDKBase.Utilities;
 
 namespace enfutu.UdonScript
 {
@@ -22,12 +23,9 @@ namespace enfutu.UdonScript
 
 
         public BlitSystem BlitSc;
-        private VRCPlayerApi _localPlayer;
         void Start()
         {
             if (FiberCount <= 0) { return; }
-
-            _localPlayer = Networking.LocalPlayer;
 
             clone();
             FibersSetPosition(1f);
@@ -71,12 +69,6 @@ namespace enfutu.UdonScript
         public float Radius;
         public void FibersSetPosition(float size)
         {
-            //fudeOpenRadiusOffset = (FudeOpenRadius_Max - FudeOpenRadius_Min) * .1f;
-            //fudeOpenRadius = Radius;
-            //_oldPos = _startBase.position;
-
-
-            //_hitBase.position = Vector3.Lerp(_endBase.position, _startBase.position, .5f);
 
             float _min = .1f;
             float fixedSize = Mathf.Clamp01(size + _min);
@@ -90,18 +82,21 @@ namespace enfutu.UdonScript
                 
                 Vector3 right = Vector3.Cross(up, forward).normalized;
                 Vector3 planeUp = Vector3.Cross(forward, right).normalized;
-                
+
                 for (int i = 0; i < FiberCount; i++)
                 {
+                    float randomAngle = Random.Range(0f, 90f);
+                    Debug.Log("Random : " + randomAngle);
+                    Quaternion randomRot = Quaternion.AngleAxis(randomAngle, forward);
+                    _raycaster[i].transform.rotation = randomRot;
+
                     float angle = (Mathf.PI * 2 / FiberCount) * i;
                     Vector3 offset = (Mathf.Cos(angle) * right + Mathf.Sin(angle) * planeUp);
                     float rad = Radius * fixedSize;
                     Vector3 pos = this.transform.position + offset * rad;
                     _raycaster[i].transform.position = pos;
 
-                    float randomAngle = Random.Range(0f, 360f);
-                    Quaternion randomRot = Quaternion.AngleAxis(randomAngle, forward);
-                    _raycaster[i].transform.rotation = randomRot;
+
                 }
             }
             else
@@ -112,27 +107,38 @@ namespace enfutu.UdonScript
                     Vector3 vec = (_raycaster[i].transform.position - center).normalized;
                     _raycaster[i].transform.position = center + vec * Radius * fixedSize;
                     _script[i].EndBase.position = _endBase.position;
-                    _script[i].InnerRange = InnerRange;
+                    //_script[i].InnerRange = InnerRange;
+                    //_script[i].SystemCenterPosition = _currentPlayer.GetBonePosition(HumanBodyBones.Head);
                 }
             }
         }
-
 
         bool _boot = false;
         void Update()
         {
             if (!_boot) return;
-            calcScale();
+            if (!Utilities.IsValid(_currentPlayer)) return;
+            //calcScale();
         }
 
+        private VRCPlayerApi _currentPlayer;
+        public int CurrentPlayerID = -1;
+        public void ChangeCurrentPlayer()
+        {
+            _currentPlayer = VRCPlayerApi.GetPlayerById(CurrentPlayerID);
+        }
+
+        
         public int CurrentHand = -1;
+        /*
+        private Vector3 center;
         private void calcScale()
         {
             Vector3 pos = this.transform.position;
 
-            Vector3 center = _localPlayer.GetBonePosition(HumanBodyBones.Head);
-            //if(CurrentHand == 0) { center = _localPlayer.GetBonePosition(HumanBodyBones.LeftHand); }
-            //if(CurrentHand == 1) { center = _localPlayer.GetBonePosition(HumanBodyBones.RightHand); }
+            center = _currentPlayer.GetBonePosition(HumanBodyBones.Head);
+            //if(CurrentHand == 0) { center = _currentPlayer.GetBonePosition(HumanBodyBones.LeftHand); }
+            //if(CurrentHand == 1) { center = _currentPlayer.GetBonePosition(HumanBodyBones.RightHand); }
 
             Vector3 vec = (pos - center).normalized;
             Vector3 pos_inner = center + vec * InnerRange * .5f;
@@ -163,10 +169,6 @@ namespace enfutu.UdonScript
 
             FibersSetPosition(size);
         }
-
-
-
-
-
+        */
     }
 }

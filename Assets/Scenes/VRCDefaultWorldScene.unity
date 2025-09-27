@@ -2879,7 +2879,8 @@ MonoBehaviour:
   BlitSc: {fileID: 299166147}
   FiberCount: 30
   _source: {fileID: 1055084579}
-  Radius: 0.1
+  Radius: 0.05
+  CurrentPlayerID: -1
   CurrentHand: -1
 --- !u!114 &939988315 stripped
 MonoBehaviour:
@@ -3316,7 +3317,6 @@ MonoBehaviour:
   Fude: {fileID: 1711813854318355095}
   ID: 0
   BlitSc: {fileID: 0}
-  InnerRange: 0
   OpenRadius: 0
   OpenVec: {x: 0, y: 0, z: 0}
   SumiCount: 0
@@ -10612,6 +10612,7 @@ MonoBehaviour:
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 1304182327}
   _scalerSc: {fileID: 936485839}
+  CurrentPlayerID: -1
 --- !u!114 &1304254784 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7418271227892861896, guid: a4b4379c091e42941a6f1f2f9c186b74,
