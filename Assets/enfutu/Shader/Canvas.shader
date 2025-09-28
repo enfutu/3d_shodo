@@ -85,16 +85,20 @@ Shader "enfutu/Canvas"
                 
                 st *= .1;
 
-
-                fixed lod0 = tex2Dlod(_MainTex, float4(st, 0, 0)).r * 1;
-                //fixed lod1 = tex2Dlod(_MainTex, float4(st, 0, 1)).r * .2;
-                //fixed lod2 = tex2Dlod(_MainTex, float4(st, 0, 2)).r * .1;
-                fixed marge = lod0;// + lod1 + lod2;
+                fixed lod0 = tex2Dlod(_MainTex, float4(st, 0, 0)).r;
+                fixed lod1 = tex2Dlod(_MainTex, float4(st, 0, 1)).r;
+                fixed lod2 = tex2Dlod(_MainTex, float4(st, 0, 2)).r;
+                
+                lod0 = step(.9, lod0);
+                lod1 = step(.54, lod1);
+                lod2 = step(.4, lod2);
+                
+                fixed marge = saturate(lod0 + lod1 + lod2);// + lod2;
                 
                 //0Å`1ÇÃíl
                 float depth = marge;
                 
-                clip(depth - .8);
+                clip(depth - .01);
 
                 fixed4 col = 1;
 

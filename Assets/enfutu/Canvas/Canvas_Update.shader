@@ -92,20 +92,11 @@ Shader "Unlit/Canvas_Update"
 
                 float input = _x * _y;
                 depth *= input;
+                depth *= .01;
 
                 //float check = tex2Dlod(_Src, float4(st, 0, 1)).r;
                 
-                float src = tex2D(_Src, st).r;
-                //if(.5 < check)
-                //{
-                //    src = check;
-                //}
-
-
-
-                
-
-                
+                float src = tex2D(_Src, st).r;           
 
                 col = step(.0001, src.r + depth);
 

@@ -21,8 +21,9 @@ namespace enfutu.UdonScript
         [SerializeField] Transform _hitBase;
         [SerializeField] Transform _endBase;
 
-
         public BlitSystem BlitSc;
+        public RaycastCenter RaycastCenterSc;
+
         void Start()
         {
             if (FiberCount <= 0) { return; }
@@ -30,7 +31,10 @@ namespace enfutu.UdonScript
             clone();
             FibersSetPosition(1f);
             BootScripts();
-            
+
+            //RaycastCenterSetup
+            RaycastCenterSc.RayLength = Vector3.Distance(_startBase.position, _endBase.position);
+
             //BlitSystemSetup
             BlitSc.count = FiberCount;
             BlitSc.Boot();
@@ -56,9 +60,12 @@ namespace enfutu.UdonScript
 
         public void BootScripts()
         {
+
+            Transform centerEndBase = RaycastCenterSc.EndBase;
             for (int i = 0; i < FiberCount; i++)
             {
                 _script[i].EndBase.position = _endBase.position;
+                _script[i].EndCenterBase = centerEndBase;
                 //_script[i].OpenVec = offset;
                 _script[i].ID = i;
                 _script[i].BlitSc = BlitSc;
@@ -118,7 +125,12 @@ namespace enfutu.UdonScript
         {
             if (!_boot) return;
             if (!Utilities.IsValid(_currentPlayer)) return;
-            //calcScale();
+
+            float length = (_startBase.position - _oldPos).sqrMagnitude;
+            if (.0001f < length)
+            {
+                calcFreeze();
+            }
         }
 
         private VRCPlayerApi _currentPlayer;
@@ -170,5 +182,38 @@ namespace enfutu.UdonScript
             FibersSetPosition(size);
         }
         */
+
+        private Vector3 _oldPos;
+        private bool _isFreeze = false;
+        private int _freezeCount = 0;
+        private void calcFreeze()
+        {
+            Vector3 currentVec = (_startBase.position - _oldPos).normalized;
+            Vector3 forward = this.transform.forward;
+
+            float d = Vector3.Dot(forward, currentVec);
+
+            if (0f < d)
+            {
+                _freezeCount = 10;
+            }
+            else
+            {
+                _freezeCount--;
+            }
+
+            if (0 < _freezeCount) { _isFreeze = true; }
+            else { _isFreeze = false; }
+
+            _oldPos = _startBase.position;
+
+            Debug.Log("isFreeze : " + _isFreeze);
+
+            for (int i = 0; i < FiberCount; i++)
+            {
+                _script[i].IsFreeze = _isFreeze;
+                _script[i].CallUpdate();
+            }
+        }
     }
 }

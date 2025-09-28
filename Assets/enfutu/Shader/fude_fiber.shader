@@ -74,7 +74,7 @@ Shader "enfutu/fude_fiber"
             _wv += lerp(_Start, _EndBase, myNum * .1) - _Start;
 
             float deformPow = length(wv - _wv);
-            deformPow = saturate(deformPow * 5);
+            deformPow = saturate(deformPow * 10);
             o.value = deformPow;
             
             float ortho = unity_OrthoParams.w;
