@@ -127,7 +127,7 @@ namespace enfutu.UdonScript
             if (!Utilities.IsValid(_currentPlayer)) return;
 
             float length = (_startBase.position - _oldPos).sqrMagnitude;
-            if (.0001f < length)
+            if (.01f < length)
             {
                 calcFreeze();
             }
@@ -193,7 +193,8 @@ namespace enfutu.UdonScript
 
             float d = Vector3.Dot(forward, currentVec);
 
-            if (0f < d)
+            //0f以上では過敏すぎる
+            if (.6f < d)
             {
                 _freezeCount = 10;
             }
@@ -201,6 +202,8 @@ namespace enfutu.UdonScript
             {
                 _freezeCount--;
             }
+            _freezeCount = (int)Mathf.Clamp(_freezeCount, 0f, 10f);
+            
 
             if (0 < _freezeCount) { _isFreeze = true; }
             else { _isFreeze = false; }
@@ -209,10 +212,13 @@ namespace enfutu.UdonScript
 
             Debug.Log("isFreeze : " + _isFreeze);
 
+            //IsFreeze
+            RaycastCenterSc.IsFreeze = _isFreeze;
+            RaycastCenterSc.FreezeCount = _freezeCount;
             for (int i = 0; i < FiberCount; i++)
             {
                 _script[i].IsFreeze = _isFreeze;
-                _script[i].CallUpdate();
+                //_script[i].CallUpdate();
             }
         }
     }

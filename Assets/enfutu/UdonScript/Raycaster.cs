@@ -48,7 +48,7 @@ namespace enfutu.UdonScript
         }
 
         float thresholdDist = 0f;
-        /*
+        
         void Update()
         {
             if (!_boot) return;
@@ -57,9 +57,9 @@ namespace enfutu.UdonScript
 
             raychan();
         }
-        */
+        
 
-
+        /*
         public void CallUpdate() 
         {
             if (!_boot) return;
@@ -67,7 +67,7 @@ namespace enfutu.UdonScript
             _start = this.transform.position;
 
             raychan();
-        }
+        }*/
 
         //raycast
         int layerMask = 1 << 25;
@@ -119,29 +119,43 @@ namespace enfutu.UdonScript
                 }
                 else
                 {
+                    //if (0 < _hitCount) { _hitCount--; }
+
                     //hitしているときは筆の動きに応じて_endBaseが動くようにする
                     float switchEndBaseOffset = rayLength / hitDistance;
                     Vector3 targetEndBase = Vector3.Lerp(EndBase.position, EndCenterBase.position, switchEndBaseOffset);
                     _endBase = Vector3.Lerp(_endBase, targetEndBase, .2f);
-                    _hit = rePosHit(.05f);
-                    _end = rePosEnd(.1f);
+                    _hit = rePosHit(.034f);
+                    _end = rePosEnd(.01f);
                 }
+
             }
             else
             {
                 //hitしていない時は_endBaseはEndBase.positionにとどまるようにする
                 _endBase = EndBase.position;
-                _hit = rePosHit(.01f);
-                _end = rePosEnd(.034f);
+                if (0 < _hitCount) 
+                {
+                    //_hitCount--;
+
+                    _hit = rePosHit(.034f);
+                    _end = rePosEnd(.01f);
+                }
+                else
+                {
+                    _hit = rePosHit(1f);
+                    _end = rePosEnd(1f);
+                }
             }
 
-
+            
             //押し付けていない時、_freezeVecを更新する。
             if (!IsFreeze) 
             {
-                if (0 < _hitCount) { _hitCount--; }
+                if (0 < _hitCount) { _hitCount--; } 
                 _freezeVec = (_hit - _start).normalized;
             }
+            
 
             //筆が伸びないように長さを整える。
             Vector3 vecToHit = (_hit - _start).normalized;
@@ -155,13 +169,15 @@ namespace enfutu.UdonScript
 
         private Vector3 rePosHit(float offset)
         {
-            float reposOffset_hit = 1f - Mathf.Clamp01(offset * _hitCount);
+            //float reposOffset_hit = 1f - Mathf.Clamp01(offset * _hitCount);
+            float reposOffset_hit = (hitDistance / rayLength) * offset;
             return Vector3.Lerp(_hit, Vector3.Lerp(_start, _endBase, .5f), reposOffset_hit);
         }
 
         private Vector3 rePosEnd(float offset)
         {
-            float reposOffset_end = 1f - Mathf.Clamp01(offset * _hitCount);
+            //float reposOffset_end = 1f - Mathf.Clamp01(offset * _hitCount);
+            float reposOffset_end = (hitDistance / rayLength) * offset;
             return Vector3.Lerp(_end, _endBase, reposOffset_end);
         }
 
