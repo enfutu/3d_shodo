@@ -48,7 +48,8 @@ Shader "enfutu/fude_fiber"
         float4 _MainTex_ST;
 
         float4 _Start, _Hit, _End, _EndBase;
-        
+        float _HitDist;        
+
         //float4 _Center;
         //float _InnerRange;
 

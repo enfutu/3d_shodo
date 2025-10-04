@@ -213,11 +213,10 @@ namespace enfutu.UdonScript
             Debug.Log("isFreeze : " + _isFreeze);
 
             //IsFreeze
-            RaycastCenterSc.IsFreeze = _isFreeze;
             RaycastCenterSc.FreezeCount = _freezeCount;
             for (int i = 0; i < FiberCount; i++)
             {
-                _script[i].IsFreeze = _isFreeze;
+                _script[i].FreezeCount = _freezeCount;
                 //_script[i].CallUpdate();
             }
         }
