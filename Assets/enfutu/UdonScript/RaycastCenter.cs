@@ -29,7 +29,7 @@ namespace enfutu.UdonScript
         }
 
         public bool IsFreeze = false;
-        public int FreezeCount = 0;
+        public float FreezeCount = 0;
         private Vector3 previousForward;
         private Vector3 previousVec;
         private Vector3 _start;
@@ -46,7 +46,7 @@ namespace enfutu.UdonScript
             Vector3 previousEnd = _start + rot * previousVec * RayLength;
 
             //抑えに応じ更新度合を変更
-            float updateOffset = FreezeCount * .1f;//.098f;
+            float updateOffset = FreezeCount;
             lerpPos = Vector3.Lerp(lerpPos, previousEnd, updateOffset);
 
             //角度を制限し長さを整えて保存

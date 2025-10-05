@@ -48,8 +48,6 @@ Shader "enfutu/fude_fiber"
         float4 _MainTex_ST;
 
         float4 _Start, _Hit, _End, _EndBase;
-        float _HitDist;        
-
         //float4 _Center;
         //float _InnerRange;
 
@@ -62,18 +60,27 @@ Shader "enfutu/fude_fiber"
             UNITY_TRANSFER_INSTANCE_ID(v, o);
             UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-            int myNum = floor(v.uv.y * 10);     //0～10まで
+            float myNum = floor(v.uv.y * 10 + .5) * .1;     //0～10まで
 
             float3 wv = mul(unity_ObjectToWorld, v.vertex).xyz;
-            float3 _wv = wv;
+            float3 _wv = wv + lerp(_Start, _EndBase, myNum) - _Start;   //直線
+            
             //2次ベジェ曲線
-            float3 p0 = lerp(_Start, _Hit, myNum * .1);
-            float3 p1 = lerp(_Hit, _End, myNum * .1);
-            float3 p2 = lerp(p0, p1, myNum * .1);
+            float3 p0 = lerp(_Start, _Hit, myNum);
+            float3 p1 = lerp(_Hit, _End, myNum);
+            float3 p2 = lerp(p0, p1, myNum);
             wv += p2 - _Start;
-            //直線
-            _wv += lerp(_Start, _EndBase, myNum * .1) - _Start;
 
+            //曲率の計算
+            float baseDist = length(_EndBase - _Start);
+            float hitDist = length(_Hit - _Start);
+            float hitDistOffset = (hitDist / (baseDist + .00001));    //hitposが筆に近いほど値は小さくなる
+            float curve = step(hitDistOffset, myNum);
+            
+            //曲率に応じてmarge
+            wv = lerp(_wv, wv, curve);
+
+            //最終的な変化率
             float deformPow = length(wv - _wv);
             deformPow = saturate(deformPow * 5);
             o.value = deformPow;
@@ -85,8 +92,11 @@ Shader "enfutu/fude_fiber"
             }
 
             //移動量調べて太さを変えたのでもう一回曲げなおす 
+            curve += saturate(myNum - saturate(myNum - hitDistOffset));
             wv = mul(unity_ObjectToWorld, v.vertex).xyz;
-            wv += p2 - _Start;
+            _wv = wv + lerp(_Start, _EndBase, myNum) - _Start;     //直線
+            wv += p2 - _Start;      //2次ベジェ曲線
+            //wv = lerp(_wv, wv, curve);
             o.wv = wv;
 
             v.vertex = mul(unity_WorldToObject, float4(wv, 1));
@@ -115,6 +125,7 @@ Shader "enfutu/fude_fiber"
             ENDCG
         }
 
+        /*
         Pass
         {
             Tags{ "LightMode"="ShadowCaster" }
@@ -135,6 +146,6 @@ Shader "enfutu/fude_fiber"
                 return 0;
             }
             ENDCG   
-        }
+        }*/
     }
 }

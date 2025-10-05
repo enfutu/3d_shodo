@@ -110,7 +110,7 @@ namespace enfutu.UdonScript
 
         private int _maxHitCount = 60;
         private int _hitCount;
-        public int FreezeCount; //Scalerから渡る
+        public float FreezeCount; //Scalerから渡る(0～1)
         
         //前回の座標を保持
         private Vector3 _start;
@@ -132,6 +132,7 @@ namespace enfutu.UdonScript
             _hitCount = (int)Mathf.Clamp(_hitCount, 0, _maxHitCount);
 
             float offset = _hitCount / _maxHitCount;
+            offset = Mathf.Clamp01(offset - FreezeCount);
             float power_rePosHit = Mathf.Lerp(1, .034f, offset);
             float power_rePosEnd = Mathf.Lerp(1, .01f, offset);
 
@@ -166,11 +167,13 @@ namespace enfutu.UdonScript
             }
 
             //筆が伸びないように長さを整える。
-            Vector3 vecToHit = (_hit - _start).normalized;
-            _hit = _start + vecToHit * rayLength * .5f;
+            float lengthToHit = Vector3.Distance(_hit, _start);
+            //Vector3 vecToHit = (_hit - _start).normalized;
+            //_hit = _start + vecToHit * rayLength * .5f;
 
             Vector3 vecToEnd = (_end - _hit).normalized;
-            _end = _hit + vecToEnd * rayLength * .5f;
+            //_end = _hit + vecToEnd * rayLength * .5f;
+            _end = _hit + vecToEnd * Mathf.Clamp(rayLength - lengthToHit, 0, rayLength);
             
             //keep
             KeepHit.position = _hit;
@@ -197,8 +200,7 @@ namespace enfutu.UdonScript
             _mat.SetVector("_Start", _start);
             _mat.SetVector("_Hit", _hit);
             _mat.SetVector("_End", _end);
-            _mat.SetVector("_EndBase", _endBase);
-            _mat.SetFloat("_HitDist", hitDistance / rayLength);
+            _mat.SetVector("_EndBase", EndBase.position);
             
             //_mat.SetFloat("_InnerRange", InnerRange);
         }

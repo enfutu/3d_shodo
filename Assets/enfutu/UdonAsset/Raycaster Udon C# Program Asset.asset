@@ -899,10 +899,10 @@ MonoBehaviour:
       Data: FreezeCount
     - Name: <UserType>k__BackingField
       Entry: 9
-      Data: 22
+      Data: 34
     - Name: <SystemType>k__BackingField
       Entry: 9
-      Data: 22
+      Data: 34
     - Name: <SyncMode>k__BackingField
       Entry: 7
       Data: System.Nullable`1[[UdonSharp.UdonSyncMode, UdonSharp.Runtime]], mscorlib
